@@ -25,7 +25,7 @@ def getSpot(name):
         else:
             hasLinks = db.session.query(Links).filter_by(spot_id = query.id)
             if hasLinks is None:
-                links = "No Links for the spot"
+                links = "None"
             else:
                 links = []
                 for item in hasLinks:
