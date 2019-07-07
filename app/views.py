@@ -38,6 +38,8 @@ def getSpot(name):
             spdMax = query.spd_max
             dirMin = query.dir_min
             dirMax = query.dir_max
+            lat = query.lat
+            lon = query.lon
             windguruID = query.windguru_id
             return jsonify(
                     spotName = spotName,
@@ -46,6 +48,9 @@ def getSpot(name):
                     spdMax = spdMax,
                     dirMin = dirMin,
                     dirMax = dirMax,
-                    links = links
+                    lat = lat,
+                    lon = lon,
+                    links = links,
+                    status =200
                     )
 
