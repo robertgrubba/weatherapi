@@ -16,7 +16,8 @@ def getSpot(name):
         return jsonify(
                 status=400
                 )
-    else:
+    numberOfNames = db.session.query(Spots).filter_by(spot_name = name).count()
+    if numberOfNames == 1:
         query = db.session.query(Spots).filter_by(spot_name = name).first()
         if query is None:
             return jsonify(
@@ -25,7 +26,7 @@ def getSpot(name):
         else:
             hasLinks = db.session.query(Links).filter_by(spot_id = query.id)
             if hasLinks is None:
-                links = "None"
+                links = "No Links for the spot"
             else:
                 links = []
                 for item in hasLinks:
@@ -53,4 +54,39 @@ def getSpot(name):
                     links = links,
                     status =200
                     )
+    else:
+        queries = db.session.query(Spots).filter_by(spot_name = name).all()
+        dirMin = []
+        dirMax = []
+        for query in queries:
+            hasLinks = db.session.query(Links).filter_by(spot_id = query.id)
+            if hasLinks is None:
+                links = "No Links for the spot"
+            else:
+                links = []
+                for item in hasLinks:
+                    links.append(item.link)
+
+
+
+            spotName = query.spot_name
+            spdMin = query.spd_min
+            spdMax = query.spd_max
+            dirMin.append(query.dir_min)
+            dirMax.append(query.dir_max)
+            lat = query.lat
+            lon = query.lon
+            windguruID = query.windguru_id
+        return jsonify(
+                spotName = spotName,
+                windguruID = windguruID,
+                spdMin = spdMin,
+                spdMax = spdMax,
+                dirMin = dirMin,
+                dirMax = dirMax,
+                lat = lat,
+                lon = lon,
+                links = links,
+                status =200
+                )
 
