@@ -1,5 +1,5 @@
 from app import app, db
-from flask import jsonify, request
+from flask import jsonify, request, send_file
 from models import Spots,Links
 import urllib, json, urllib2, os, sys, ssl, hashlib, time,re
 from datetime import datetime
@@ -118,5 +118,5 @@ def drawWindRose(name):
 			for x in range(numberOfResults):
 				draw.arc([20+size,20+size,280-size,280-size],dirMin[x],dirMax[x],fill=(0,255,0,90))
 		composite = Image.alpha_composite(img, windrose.rotate(90))
-#		composite.save(str(name)+".png", "PNG")
-		return composite
+		composite.save("app/"+str(name).lower()+".png", "PNG")
+		return send_file(str(name).lower()+".png", mimetype='image/png')
