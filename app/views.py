@@ -58,10 +58,9 @@ def flyabledays(name):
 		else:
 			for flyableday in flyabledays:
 				if today <= flyableday.hr_d:
-					comment+= str(flyableday.hr_d)+"."+str(now.month)+", "
+					comment+= str(flyableday.hr_d)+"/"+str(now.month)+"/"+str(now.year)+", "
 				else:
-					comment+= str(flyableday.hr_d)+"."+str(now.month+1)+", "
-			comment = "&#10004; -> "+comment #flyable
+					comment+= str(flyableday.hr_d)+"/"+str(now.month+1)+"/"+str(now.year)+", "
 	return comment
 
 @app.route('/spot/<string:name>')
