@@ -13,10 +13,10 @@ class Links(db.Model):
     link = db.Column(db.String(250))
 
     def __init__(self, *args, **kwargs):
-        super(Link, self).__init__(*args, **kwargs)
+        super(Links, self).__init__(*args, **kwargs)
         
     def __repr__(self):
-        return '<Link: %s>' % self.id
+        return '<Links: %s>' % self.id
 
 class Spots(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,8 +32,38 @@ class Spots(db.Model):
     elev = db.Column(db.SmallInteger)
 
     def __init__(self, *args, **kwargs):
-        super(Spot, self).__init__(*args, **kwargs)
+        super(Spots, self).__init__(*args, **kwargs)
         
     def __repr__(self):
-        return '<Spot: %s>' % self.id
+        return '<Spots: %s>' % self.id
+
+class Forecasts(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	windguru_id = db.Column(db.Integer)
+	tmp = db.Column(db.Float)
+	tcdc = db.Column(db.Integer)
+	hcdc = db.Column(db.Integer)
+	mcdc = db.Column(db.Integer)
+	lcdc = db.Column(db.Integer)
+	rh = db.Column(db.Integer)
+	gust = db.Column(db.Float)
+	slp = db.Column(db.Float)
+	flhgt = db.Column(db.Integer)
+	apcp = db.Column(db.Integer)
+	windspd = db.Column(db.Float)
+	winddir = db.Column(db.Integer)
+	smern = db.Column(db.Integer)
+	tmpe = db.Column(db.Float)
+	pcpt = db.Column(db.Float)
+	hr_weekday = db.Column(db.Integer)
+	hr_h = db.Column(db.Integer)
+	hr_d = db.Column(db.Integer)
+	hours = db.Column(db.Integer)
+	flyable = db.Column(db.SmallInteger)
+	
+	def __init__(self, *args, **kwargs):
+        	super(Forecasts, self).__init__(*args, **kwargs)
+        
+	def __repr__(self):
+        	return '<Forecasts: %s>' % self.id
 
