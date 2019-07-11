@@ -47,7 +47,7 @@ def isflyabletoday(name):
 def flyabledays(name):
 	query = db.session.query(Spots).filter_by(spot_name = name).first()
 	if query is None:
-		return ""
+		return "&#10008;"
 	else:
 		now = datetime.now()
 		today = now.day
@@ -57,11 +57,11 @@ def flyabledays(name):
 			comment="&#10008;"
 		else:
 			for flyableday in flyabledays:
-				if today <= flyableday.hr_d:
+				if today <= (flyableday.hr_d+5):
 					comment+= str(flyableday.hr_d)+"/"+str(now.month)+"/"+str(now.year)+", "
 				else:
 					comment+= str(flyableday.hr_d)+"/"+str(now.month+1)+"/"+str(now.year)+", "
-	return comment
+	return comment.rstrip(', ')
 
 @app.route('/spot/<string:name>')
 def getSpot(name):
