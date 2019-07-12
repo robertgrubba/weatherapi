@@ -41,7 +41,14 @@ def isflyabletoday(name):
 		if flyable is None:
 			return "&#10008;"
 		else:
-			return "&#10004;" #flyable
+			spot = db.session.query(Spots).filter_by(spot_name = name).first()
+			spdMax = spot.spd_max
+			spdMin = spot.spd_min
+			flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).first()
+			if flyable is not None:
+				return "&#10004;" #flyable
+			else:
+				return "&#10004; / &#10008;" #flyable
 
 @app.route('/isflyabletoday/1/<string:name>')
 def isflyabletodayv2(name):
@@ -53,10 +60,16 @@ def isflyabletodayv2(name):
 		today = now.day
 		flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).first()
 		if flyable is None:
-#			return "&#9928;"
-			return "&#9729;"
+			return "&#9730;"
 		else:
-			return "&#9728;" #flyable
+                        spot = db.session.query(Spots).filter_by(spot_name = name).first()
+                        spdMax = spot.spd_max
+                        spdMin = spot.spd_min
+                        flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).first()
+                        if flyable is not None:
+                                return "&#9728;" #high chances to be flyable 
+                        else:
+                                return "&#9729;" #low chances to be flyable
 
 @app.route('/flyabledays/<string:name>')
 def flyabledays(name):
