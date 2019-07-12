@@ -43,6 +43,21 @@ def isflyabletoday(name):
 		else:
 			return "&#10004;" #flyable
 
+@app.route('/isflyabletoday/1/<string:name>')
+def isflyabletodayv2(name):
+	query = db.session.query(Spots).filter_by(spot_name = name).first()
+	if query is None:
+		return ""
+	else:
+		now = datetime.now()
+		today = now.day
+		flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).first()
+		if flyable is None:
+#			return "&#9928;"
+			return "&#9729;"
+		else:
+			return "&#9728;" #flyable
+
 @app.route('/flyabledays/<string:name>')
 def flyabledays(name):
 	query = db.session.query(Spots).filter_by(spot_name = name).first()
