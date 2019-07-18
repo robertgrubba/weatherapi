@@ -30,6 +30,7 @@ class Spots(db.Model):
     dir_max = db.Column(db.Integer)
     dir_min = db.Column(db.Integer)
     elev = db.Column(db.SmallInteger)
+    type = db.Column(db.SmallInteger)
 
     def __init__(self, *args, **kwargs):
         super(Spots, self).__init__(*args, **kwargs)
