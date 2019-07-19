@@ -48,7 +48,7 @@ def isflyabletoday(name):
 			if spot.type!=1:
 				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).first()
 			else:
-				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).filter(Forecasts.lcdc<30).filter(Forecasts.hcdc<30).filter(Forecasts.mcdc<30).filter(Forecasts.tcdc<30).first()
+				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=9).filter(Forecasts.hr_h<=20).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).filter(Forecasts.lcdc<30).filter(Forecasts.hcdc<30).filter(Forecasts.mcdc<30).filter(Forecasts.tcdc<30).first()
 	
 			if flyable is not None:
 				return "&#10004;" #flyable
@@ -74,7 +74,7 @@ def isflyabletodayv2(name,future):
 			if spot.type!=1:
 				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).first()
 			else:
-				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).filter(Forecasts.lcdc<30).filter(Forecasts.hcdc<30).filter(Forecasts.mcdc<30).filter(Forecasts.tcdc<30).first()
+				flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=9).filter(Forecasts.hr_h<=20).filter(Forecasts.windspd<=spdMax).filter(Forecasts.windspd>=spdMin).filter(Forecasts.lcdc<30).filter(Forecasts.hcdc<30).filter(Forecasts.mcdc<30).filter(Forecasts.tcdc<30).first()
                         if flyable is not None:
                                 return "&#9728;" #high chances to be flyable 
                         else:
