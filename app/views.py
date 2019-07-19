@@ -55,14 +55,14 @@ def isflyabletoday(name):
 			else:
 				return "&#10004; / &#10008;" #somewhat flyable
 
-@app.route('/isflyabletoday/1/<string:name>')
-def isflyabletodayv2(name):
+@app.route('/isflyabletoday/<int:future>/<string:name>')
+def isflyabletodayv2(name,future):
 	query = db.session.query(Spots).filter_by(spot_name = name).first()
 	if query is None:
 		return ""
 	else:
 		now = datetime.now()
-		today = now.day
+		today = (now.day + future) - 1
 		currenthour = now.hour
 		flyable = db.session.query(Forecasts).filter_by(windguru_id=query.windguru_id).filter_by(flyable=1).filter_by(hr_d=today).filter(Forecasts.hr_h>currenthour).filter(Forecasts.hr_h>=6).filter(Forecasts.hr_h<=22).first()
 		if flyable is None:
@@ -176,6 +176,23 @@ def getSpot(name):
                 links = links,
                 status =200
                 )
+
+@app.route('/forecastlinks/<string:name>')
+def forecastLinks(name):
+    if len(name)<3:
+        return jsonify(
+                status=400
+                )
+    query = db.session.query(Spots).filter_by(spot_name = name).first()
+    if query is None:
+         return jsonify(
+                 status=404
+                )
+    else:
+         lat = query.lat
+         lon = query.lon
+         windguruID = query.windguru_id
+         return "<a href='https://www.windguru.cz/"+str(windguruID)+"' target='_blank'>Windguru</a> <a href='https://www.windy.com/"+str(lat)+"/"+str(lon)+"' target='_blank'>Windy</a>"
 
 @app.route('/windrose/<string:name>')
 def drawWindRose(name):
