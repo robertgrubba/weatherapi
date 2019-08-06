@@ -124,6 +124,8 @@ def flyabledays(name):
 					comment+= str(flyableday.hr_d)+"/"+str(now.month)+"/"+str(now.year)+", "
 				else:
 					comment+= str(flyableday.hr_d)+"/"+str(now.month+1)+"/"+str(now.year)+", "
+	if len(comment) < 3:
+		comment="&#10008;"
 	return comment.rstrip(', ')
 
 @app.route('/spot/<string:name>')
