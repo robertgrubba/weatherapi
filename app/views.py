@@ -27,13 +27,13 @@ def isdefined(name):
         if query is not None:
             return "&#10037;"
 	else:
-	    return ""
+	    return "",404
 
 @app.route('/isflyabletoday/<string:name>')
 def isflyabletoday(name):
 	query = db.session.query(Spots).filter_by(spot_name = name).first()
 	if query is None:
-		return ""
+		return "",404
 	else:
 		now = datetime.now()
 		today = now.day
@@ -65,7 +65,7 @@ def forecastforfivedays(name):
 def isflyabletodayv2(name,future):
 	query = db.session.query(Spots).filter_by(spot_name = name).first()
 	if query is None:
-		return ""
+		return "",404
 	else:
 		now = datetime.now()
 		today = (now.day + future) - 1
@@ -140,7 +140,7 @@ def getSpot(name):
         if query is None:
             return jsonify(
                     status=404
-                    )
+                    ),404
         else:
             hasLinks = db.session.query(Links).filter_by(spot_id = query.id)
             if hasLinks is None:
@@ -215,7 +215,7 @@ def forecastLinks(name):
     if query is None:
          return jsonify(
                  status=404
-                )
+                ),404
     else:
          lat = query.lat
          lon = query.lon
@@ -234,7 +234,7 @@ def drawWindRose(name):
 	    if results is None:
 		return jsonify(
 			status=404
-			)
+			),404
 	    else:
 		dirMin = []
 		dirMax = []
